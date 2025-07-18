@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kydenticon Express.js Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-900">
+            Kydenticon Express.js Demo
+        </h1>
+
+        <div class="space-y-12">
+            <!-- PNG Examples -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+                    PNG Identicons (5×5 Grid)
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    These PNG identicons are served directly from Express.js endpoints.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="png-examples">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- SVG Examples -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+                    SVG Identicons (7×7 Grid)
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    SVG identicons are scalable and perfect for high-DPI displays.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="svg-examples">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Try Your Own -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+                    Try Your Own
+                </h2>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex gap-4 mb-4">
+                        <input type="text" id="custom-input" placeholder="Enter email or username..."
+                            value="your@email.com"
+                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onclick="generateCustom()"
+                            class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Generate
+                        </button>
+                    </div>
+                    <div class="flex gap-8 justify-center" id="custom-result">
+                        <!-- Custom results will appear here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+                    Code Examples
+                </h2>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">HTML Image Tag</h3>
+                        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;img 
+  src="/identicon/user@example.com" 
+  alt="User avatar" 
+  width="64" 
+  height="64"
+  loading="lazy"
+&gt;</code></pre>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">JavaScript Dynamic URLs</h3>
+                        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>// PNG identicon
+const pngUrl = `/identicon/${encodeURIComponent(userEmail)}`;
+
+// SVG identicon  
+const svgUrl = `/identicon-svg/${encodeURIComponent(userEmail)}`;
+
+// Create image element
+const img = document.createElement('img');
+img.src = pngUrl;
+img.alt = `Avatar for ${userEmail}`;
+img.width = 64;
+img.height = 64;</code></pre>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Express.js Route Handler</h3>
+                        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>const { generateIdenticonPng } = require('kydenticon');
+
+app.get('/identicon/:id', (req, res) => {
+  const png = generateIdenticonPng(req.params.id);
+  res.set('Content-Type', 'image/png');
+  res.send(png);
+});</code></pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const users = [
+            'alice@example.com',
+            'bob@github.com',
+            'charlie.dev',
+            'diana.smith',
+            'echo-user',
+            'frank123'
+        ];
+
+        // Generate PNG examples
+        const pngContainer = document.getElementById('png-examples');
+        users.forEach(user => {
+            const div = document.createElement('div');
+            div.className = 'text-center';
+            div.innerHTML = `
+                <img 
+                    src="/identicon/${encodeURIComponent(user)}" 
+                    alt="Avatar for ${user}"
+                    width="100" 
+                    height="100"
+                    class="rounded-lg shadow-md mx-auto"
+                    loading="lazy"
+                >
+                <p class="text-xs text-gray-600 mt-2 break-all">${user}</p>
+            `;
+            pngContainer.appendChild(div);
+        });
+
+        // Generate SVG examples
+        const svgContainer = document.getElementById('svg-examples');
+        users.slice(0, 4).forEach(user => {
+            const div = document.createElement('div');
+            div.className = 'text-center';
+            div.innerHTML = `
+                <img 
+                    src="/identicon-svg/${encodeURIComponent(user)}" 
+                    alt="SVG Avatar for ${user}"
+                    width="120" 
+                    height="120"
+                    class="rounded-lg shadow-md mx-auto"
+                    loading="lazy"
+                >
+                <p class="text-xs text-gray-600 mt-2 break-all">${user}</p>
+            `;
+            svgContainer.appendChild(div);
+        });
+
+        // Generate custom identicon
+        function generateCustom() {
+            const input = document.getElementById('custom-input').value.trim();
+            if (!input) return;
+
+            const resultContainer = document.getElementById('custom-result');
+            const encodedInput = encodeURIComponent(input);
+
+            resultContainer.innerHTML = `
+                <div class="text-center">
+                    <h4 class="text-sm font-medium mb-2">PNG Version</h4>
+                    <img 
+                        src="/identicon/${encodedInput}" 
+                        alt="Custom PNG avatar"
+                        width="100" 
+                        height="100"
+                        class="rounded-lg shadow-md mx-auto"
+                    >
+                </div>
+                <div class="text-center">
+                    <h4 class="text-sm font-medium mb-2">SVG Version</h4>
+                    <img 
+                        src="/identicon-svg/${encodedInput}" 
+                        alt="Custom SVG avatar"
+                        width="100" 
+                        height="100"
+                        class="rounded-lg shadow-md mx-auto"
+                    >
+                </div>
+            `;
+        }
+
+        // Generate custom on Enter key
+        document.getElementById('custom-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                generateCustom();
+            }
+        });
+
+        // Generate initial custom example
+        generateCustom();
+    </script>
+</body>
+
+</html>

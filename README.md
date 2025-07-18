@@ -297,6 +297,28 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## 📖 Examples
+
+Complete working examples are available in the `examples/` directory:
+
+### Next.js App Router
+- **Location**: `examples/nextjs/`
+- **Features**: Route handlers, `next/image` component, regular `<img>` tags
+- **Includes**: PNG/SVG endpoints, demo page, TypeScript examples
+
+### Express.js Server
+- **Location**: `examples/express/`
+- **Features**: REST API endpoints, interactive demo page
+- **Includes**: PNG/SVG routes, caching, error handling
+
+Both examples include:
+- ✅ Complete, runnable code
+- ✅ Multiple usage patterns
+- ✅ Production-ready configurations
+- ✅ Detailed documentation
+
+> **Note**: Example files may show TypeScript/import errors when viewed in this repository. This is expected since they're designed to be copied into proper Next.js/Express.js projects with the correct dependencies installed.
+
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/K-Mistele/kydenticon)
