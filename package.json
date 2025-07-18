@@ -5,7 +5,7 @@
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"description": "",
+	"description": "The easiest way to create beautiful GitHub-style identicons in Node.js and TypeScript",
 	"exports": {
 		"types": "./dist/index.d.ts",
 		"import": "./dist/index.js",
@@ -16,7 +16,18 @@
 		"prepublishOnly": "bun run build"
 	},
 	"files": ["dist"],
-	"keywords": ["bun"],
+	"keywords": [
+		"identicon",
+		"avatar",
+		"github",
+		"profile",
+		"image",
+		"png",
+		"svg",
+		"generator",
+		"typescript",
+		"bun"
+	],
 	"license": "MIT",
 	"homepage": "https://github.com/K-Mistele/kydenticon#readme",
 	"repository": {
