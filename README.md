@@ -1,12 +1,7 @@
-# bun starter
+# Kydenticon
+The easiest way to create great-looking GitHub-style identicons in Node.js
 
-## Getting Started
-
-Click the [Use this template](https://github.com/wobsoriano/bun-lib-starter/generate) button to create a new repository with the contents starter.
-
-OR
-
-Run `bun create wobsoriano/bun-lib-starter ./my-lib`.
+## Getting started
 
 ## Setup
 
